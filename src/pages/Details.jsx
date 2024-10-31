@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
 function Details() {
   const [product, setProduct] = useState([]);
   const [color, setColor] = useState("");
@@ -19,40 +20,18 @@ function Details() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [id]);
 
-  const handleSetCart = (e) => {
-    e.preventDefault();
-
+  const handleAddToCart = () => {
     const data = {
-      color: color,
-      count: Number(count),
       id: product.id,
-      data: product,
+      color: color,
+      count: count,
+      product: product,
     };
-
-    let copied = [...state.cart];
-
-    let isExist = copied.find(function (c) {
-      return c.id == data.id && color == c.color;
-    });
-
-    if (!isExist) {
-      copied = [...state.cart, data];
-    } else {
-      copied = copied.map(function (value) {
-        if (value.id == data.id && color == value.color) {
-          value.count = Number(value.count);
-          value.count += Number(data.count);
-        }
-        return value;
-      });
-    }
-
-    dispatch({ type: "ADD", payload: copied });
-    localStorage.setItem("cart", JSON.stringify(copied));
-    console.log(state);
+    dispatch({ type: "ADD_TO_CART", payload: data });
   };
+
   return (
     <section className="max-w-[1088px] mx-auto py-20">
       {product.id && (
@@ -78,12 +57,11 @@ function Details() {
                 product.attributes.colors.map((colorProduct) => {
                   return (
                     <span
-                      id={colorProduct.id}
+                      key={colorProduct}
                       onClick={() => setColor(colorProduct)}
                       style={{
                         backgroundColor: colorProduct,
-                        border:
-                          color === colorProduct ? "2px solid black" : "none",
+                        border: color === colorProduct ? "2px solid black" : "none",
                       }}
                       className="badge w-6 h-6 mr-2 border-2 border-secondary cursor-pointer mt-2"
                     ></span>
@@ -104,16 +82,13 @@ function Details() {
                   setCount(e.target.value);
                 }}
               >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
+                {[...Array(6)].map((_, i) => (
+                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
               </select>
             </div>
             <button
-              onClick={handleSetCart}
+              onClick={handleAddToCart}
               className="btn btn-secondary btn-md mt-10"
             >
               ADD TO BAG
