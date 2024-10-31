@@ -1,0 +1,18 @@
+{
+    "en": {
+      "translation": {
+        "note": "I can do better but I think I should receive this languages from backend so this function only works to this word."
+      }
+    },
+    "ru": {
+      "translation": {
+        "note": "Я могу сделать лучше, но думаю, что мне стоит получить эти языки с сервера, поэтому эта функция работает только с этими словами."
+      }
+    },
+    "uz": {
+      "translation": {
+        "note": "Men yaxshiroq qila olaman, lekin bu tillarni backenddan olishim kerak deb o'ylayman, shuning uchun bu funksiya faqat shu so'zlar uchun ishlaydi."
+      }
+    }
+  }
+  
